@@ -1,5 +1,4 @@
 import * as express from "express";
-import timeClock from "./src/routes/timeClock.route";
 import mongoose from 'mongoose';
 import  timeClockRouter from "./src/routes/timeClock.route";
 import employeeRouter from "./src/routes/employee.route";
@@ -30,9 +29,6 @@ mongoose.connect(database, err => {
 
 
 //Body Parser
-/*app.use(express.json())
-app.use(express.urlencoded({ extended: true }));*/
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
