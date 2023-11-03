@@ -16,19 +16,21 @@ export const getAllTimeClocks = async (req: Request , res: Response) => {
       if (!employee) {
          res.status(404).json({ message: 'Employee ID is not Valid' });
       }
+      else {
+        const resultGet : TIMECLOCK_OBJECT[] | string = await getAllTimeClocksService(employeeId)
 
-      const resultGet : TIMECLOCK_OBJECT[] | string = await getAllTimeClocksService(employeeId)
-
-      if( typeof resultGet != "string"){ // no error
-         res.status(200).json({
-            data: resultGet,
-            message: "employees are dispalyed succussfully"
-         })
-      }else{
-        res.status(404).json({
-            message: resultGet
-        })
+        if( typeof resultGet != "string"){ // no error
+           res.status(200).json({
+              data: resultGet,
+              message: "employees are dispalyed succussfully"
+           })
+        }else{
+          res.status(404).json({
+              message: resultGet
+          })
+        }
       }
+      
    }catch (error){
         res.status(404).json({
             message: error.message

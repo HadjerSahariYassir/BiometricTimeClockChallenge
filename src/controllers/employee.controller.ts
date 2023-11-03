@@ -13,26 +13,26 @@ export const getEmployees = async (req: Request, res: Response) => {
        const pattern = /^\d{4}-\d{2}-\d{2}$/;
  
        if (!pattern.test(dateCreated as string)) {
-         return res.status(400).json({ message: "Invalid date format" });
+          res.status(400).json({ message: "Invalid date format" });
        }
  
        const convertedDate: Date = new Date(dateCreated as string);
  
        if (isNaN(convertedDate.getTime())) {
-         return res.status(400).json({ message: "Invalid date. Please provide a valid date." });
+          res.status(400).json({ message: "Invalid date. Please provide a valid date." });
        }
  
        const employees = await getEmployeesByDateService(convertedDate);
  
        if (employees) {
          if(employees.length != 0) 
-            return res.status(200).json({
+             res.status(200).json({
                data: employees,
                message: "Filtering employees by date creation is done successfully!",
             });
-         else return res.status(200).json
+         else  res.status(200).json
               ({  data: employees, 
-                  message: "no data in that data"
+                  message: "no data in that date"
               })
        }
      } else {
@@ -62,13 +62,15 @@ export const createEmployee = async (req: Request, res: Response) => {
             res.status(400).json({
                message: "please fill the required attributes!"
             })
+         }else {
+            const employee = await  createEmployeeService(employeeObj);
+
+            if(employee) 
+              {  res.status(201).json({
+                  message: employee
+              })} 
          }
-         const employee = await  createEmployeeService(employeeObj);
-         if(employee) 
-            {  res.status(201).json({
-               message: employee
-            })} 
-         
+      
    }catch(error){
        res.status(400).json({
          message: error.message
