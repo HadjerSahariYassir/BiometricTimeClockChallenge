@@ -9,4 +9,6 @@ timeClockRouter.get("/employees/:id/timeClocks", timeClock_controller_1.getAllTi
 timeClockRouter.post("/employees/:id/timeClocks/check-in", timeClock_controller_1.createTimeClockCheckIn);
 // update the checkout of the employee who was checkedin before
 timeClockRouter.put("/employees/:id/timeClocks/check-out", timeClock_controller_1.createTimeClockCheckOut);
+// delete timecloks of an employee 
+timeClockRouter.delete("/employees/:id/timeClocks", timeClock_controller_1.deleteTimeClocksByEmployee);
 exports.default = timeClockRouter;

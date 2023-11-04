@@ -14,7 +14,7 @@ const timeClock = new Schema({
         type: String,
         required: false
     },
-    total: { type: Number,
+    total: { type: String,
         required: false
     },
     employeeId: { type: Schema.Types.ObjectId,

@@ -79,4 +79,33 @@ export const createEmployee = async (req: Request, res: Response) => {
    }
 }
 
+//delete employee by id
+export const deleteEmployeeByID = async (req: Request, res: Response) => {
+  try{
+    const employeeId = req.params.id as string;
+    // check if id is valid
+    const deletedEmployee = await employeeModel.findByIdAndDelete(employeeId);
+    
+    if(!deletedEmployee){
+      res.status(404).json({message: "employee doesn't exist"})
+    }
+    else {
+      res.status(200).json({message: "operation delete done successfully"})
+    }
+  }catch(error){
+      res.status(500).json({message: error.message})
+  }
+}
 
+//delete all 
+export const deleteALl = async (req: Request, res: Response) => {
+  try{
+
+    const deletedEmployee = await employeeModel.deleteMany()
+    
+      res.status(200).json({message: "operation delete done successfully"})
+    
+  }catch(error){
+      res.status(500).json({message: error.message})
+  }
+}

@@ -1,8 +1,8 @@
 import { Response , Request } from "express"
 import { createCheckInService, createCheckOutService, getAllTimeClocksService } from "../services/timeClock.service"
-import { timeClockModel } from "../models/timeClock.model"
-import { TIMECLOCK_OBJECT, CHECK_PARAMS} from "../../unit/unit"
+import { TIMECLOCK_OBJECT } from "../../unit/unit"
 import { employeeModel } from "../models/employee.model"
+import { timeClockModel } from "../models/timeClock.model"
 
 
 //get list of all employees
@@ -101,3 +101,20 @@ export const createTimeClockCheckOut = async (req: Request, res: Response) => {
     }
  }
 
+//delete all timeClocks of an employee
+export const deleteTimeClocksByEmployee = async (req: Request, res: Response) => {
+  try{
+    const employeeId = req.params.id as string;
+    // check if id is valid
+    const deletedTimeclocks = await timeClockModel.deleteMany({ employeeId: employeeId});
+    
+    if(deletedTimeclocks.deletedCount == 0){
+      res.status(404).json({message: "employee doesn't exist"})
+    }
+    else {
+      res.status(200).json({message: "operation delete done successfully"})
+    }
+  }catch(error){
+      res.status(500).json({message: error.message})
+  }
+}

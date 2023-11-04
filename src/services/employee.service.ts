@@ -25,7 +25,7 @@ export const getAllEmployeesService = async () => {
     var newEmployee = new employeeModel({
         lastName: employeeObject.lastName,
         firstName: employeeObject.firstName,
-        dateCreated: employeeObject ? employeeObject.dateCreated : nowDate,
+        dateCreated: employeeObject.dateCreated ? employeeObject.dateCreated : nowDate,
         department: employeeObject.department,
         phone: employeeObject.phone,
         address: employeeObject.address
@@ -56,3 +56,4 @@ export const getAllEmployeesService = async () => {
         }
     
  }
+

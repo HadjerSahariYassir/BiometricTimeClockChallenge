@@ -7,4 +7,8 @@ const employeeRouter = express.Router();
 employeeRouter.get("/employees", employee_controller_1.getEmployees);
 // save employee object into database
 employeeRouter.post("/employees", employee_controller_1.createEmployee);
+// Delete an employees by id
+employeeRouter.delete("/employees/:id", employee_controller_1.deleteEmployeeByID);
+// Delete all employees 
+employeeRouter.delete("/employees", employee_controller_1.deleteALl);
 exports.default = employeeRouter;

@@ -32,7 +32,7 @@ const createEmployeeService = (employeeObject) => __awaiter(void 0, void 0, void
     var newEmployee = new employee_model_1.employeeModel({
         lastName: employeeObject.lastName,
         firstName: employeeObject.firstName,
-        dateCreated: employeeObject ? employeeObject.dateCreated : nowDate,
+        dateCreated: employeeObject.dateCreated ? employeeObject.dateCreated : nowDate,
         department: employeeObject.department,
         phone: employeeObject.phone,
         address: employeeObject.address

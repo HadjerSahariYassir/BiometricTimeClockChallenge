@@ -107,12 +107,19 @@ const convertTimClockToObject = (item) => {
 exports.convertTimClockToObject = convertTimClockToObject;
 const calculateTimeInHours = (date1, date2) => {
     if (date1 && date2) {
-        console.log("we are inside");
-        const time1 = date1.getTime(); // Convert to milliseconds
-        const time2 = date2.getTime();
-        const timeDifferenceMilliseconds = time2 - time1;
-        const timeDifferenceMinutes = timeDifferenceMilliseconds / (1000 * 60 * 60); // Convert to minutes
-        return timeDifferenceMinutes;
+        if (date1 && date2) {
+            const time1 = date1.getTime(); // Convert to milliseconds
+            const time2 = date2.getTime();
+            const timeDifferenceMilliseconds = time2 - time1;
+            // Calculate hours, minutes, and seconds
+            const seconds = Math.floor((timeDifferenceMilliseconds / 1000) % 60);
+            const minutes = Math.floor((timeDifferenceMilliseconds / (1000 * 60)) % 60);
+            const hours = Math.floor(timeDifferenceMilliseconds / (1000 * 60 * 60));
+            // Format the time difference as "HH:MM:SS"
+            const formattedTimeDifference = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            return formattedTimeDifference;
+        }
+        return "invalid input";
     }
     return 0;
 };

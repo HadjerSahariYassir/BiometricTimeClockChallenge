@@ -13,7 +13,7 @@ export interface TIMECLOCK_OBJECT {
     checkIn: Date | null,
     checkOut: Date | null,
     comment: String,
-    total: number | 0,
+    total: string | 0,
     employeeId?: string
 }
 

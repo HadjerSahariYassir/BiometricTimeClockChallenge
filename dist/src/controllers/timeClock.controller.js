@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTimeClockCheckOut = exports.createTimeClockCheckIn = exports.getAllTimeClocks = void 0;
+exports.deleteTimeClocksByEmployee = exports.createTimeClockCheckOut = exports.createTimeClockCheckIn = exports.getAllTimeClocks = void 0;
 const timeClock_service_1 = require("../services/timeClock.service");
 const employee_model_1 = require("../models/employee.model");
+const timeClock_model_1 = require("../models/timeClock.model");
 //get list of all employees
 const getAllTimeClocks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -22,17 +23,19 @@ const getAllTimeClocks = (req, res) => __awaiter(void 0, void 0, void 0, functio
         if (!employee) {
             res.status(404).json({ message: 'Employee ID is not Valid' });
         }
-        const resultGet = yield (0, timeClock_service_1.getAllTimeClocksService)(employeeId);
-        if (typeof resultGet != "string") { // no error
-            res.status(200).json({
-                data: resultGet,
-                message: "employees are dispalyed succussfully"
-            });
-        }
         else {
-            res.status(404).json({
-                message: resultGet
-            });
+            const resultGet = yield (0, timeClock_service_1.getAllTimeClocksService)(employeeId);
+            if (typeof resultGet != "string") { // no error
+                res.status(200).json({
+                    data: resultGet,
+                    message: "employees are retrieved succussfully"
+                });
+            }
+            else {
+                res.status(404).json({
+                    message: resultGet
+                });
+            }
         }
     }
     catch (error) {
@@ -56,7 +59,8 @@ const createTimeClockCheckIn = (req, res) => __awaiter(void 0, void 0, void 0, f
         const timeClock = yield (0, timeClock_service_1.createCheckInService)(params);
         if (timeClock) {
             res.status(201).json({
-                message: timeClock
+                data: timeClock,
+                message: "operation of checkin was done successfully"
             });
         }
         else {
@@ -86,7 +90,8 @@ const createTimeClockCheckOut = (req, res) => __awaiter(void 0, void 0, void 0, 
         const timeClock = yield (0, timeClock_service_1.createCheckOutService)(params);
         if (timeClock) {
             res.status(201).json({
-                message: timeClock
+                data: timeClock,
+                message: "operation of checkin was done successfully"
             });
         }
         else {
@@ -102,3 +107,21 @@ const createTimeClockCheckOut = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.createTimeClockCheckOut = createTimeClockCheckOut;
+//delete all timeClocks of an employee
+const deleteTimeClocksByEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const employeeId = req.params.id;
+        // check if id is valid
+        const deletedTimeclocks = yield timeClock_model_1.timeClockModel.deleteMany({ employeeId: employeeId });
+        if (deletedTimeclocks.deletedCount == 0) {
+            res.status(404).json({ message: "employee doesn't exist" });
+        }
+        else {
+            res.status(200).json({ message: "operation delete done successfully" });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+exports.deleteTimeClocksByEmployee = deleteTimeClocksByEmployee;
