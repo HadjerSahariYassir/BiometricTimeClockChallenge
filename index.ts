@@ -8,7 +8,7 @@ import { HOST, PORT, USER_DB, PASSWORD_DB}  from "./config/config";
 
 
 
-const app = express();
+export const app = express();
 
 //database connexion
 const dbConnexion = (user: string, password: string): string => {
@@ -16,8 +16,7 @@ const dbConnexion = (user: string, password: string): string => {
 }
 
 let database: string = dbConnexion(USER_DB, PASSWORD_DB);
-console.log(" url db", database)
-console.log("hiii")
+
 mongoose.connect(database, err => {
     console.log("error ", err)
     if (err == null) {
@@ -41,6 +40,11 @@ app.get('/',(req, res) => {
 })
 
 //server runing
-app.listen(PORT, () => {
+export const server = app.listen(PORT, () => {
     console.log(`server is runing on port https://${HOST}:${PORT}`)
 } )
+
+// server static file
+app.use(express.static('public'))
+
+export default app;

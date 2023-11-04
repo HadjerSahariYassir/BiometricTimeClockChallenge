@@ -20,20 +20,20 @@ export const getEmployees = async (req: Request, res: Response) => {
  
        if (isNaN(convertedDate.getTime())) {
           res.status(400).json({ message: "Invalid date. Please provide a valid date." });
-       }
- 
-       const employees = await getEmployeesByDateService(convertedDate);
- 
-       if (employees) {
-         if(employees.length != 0) 
-             res.status(200).json({
-               data: employees,
-               message: "Filtering employees by date creation is done successfully!",
-            });
-         else  res.status(200).json
-              ({  data: employees, 
-                  message: "no data in that date"
-              })
+       } else {
+            const employees = await getEmployeesByDateService(convertedDate);
+    
+            if (employees) {
+              if(employees.length != 0) 
+                  res.status(200).json({
+                    data: employees,
+                    message: "Filtering employees by date creation is done successfully!",
+                });
+              else  res.status(200).json
+                  ({  data: employees, 
+                      message: "no data in that date"
+                  })
+            }
        }
      } else {
        // If 'dateCreated' is not given so get all employees
@@ -67,7 +67,8 @@ export const createEmployee = async (req: Request, res: Response) => {
 
             if(employee) 
               {  res.status(201).json({
-                  message: employee
+                  data: employee,
+                  message: "creation was done successfully"
               })} 
          }
       

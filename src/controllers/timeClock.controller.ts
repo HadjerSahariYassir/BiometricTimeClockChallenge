@@ -22,7 +22,7 @@ export const getAllTimeClocks = async (req: Request , res: Response) => {
         if( typeof resultGet != "string"){ // no error
            res.status(200).json({
               data: resultGet,
-              message: "employees are dispalyed succussfully"
+              message: "employees are retrieved succussfully"
            })
         }else{
           res.status(404).json({
@@ -53,7 +53,8 @@ export const createTimeClockCheckIn = async (req: Request, res: Response) => {
         const timeClock = await createCheckInService(params);
         if(timeClock){
             res.status(201).json({
-                message: timeClock
+                data: timeClock,
+                message: "operation of checkin was done successfully"
              })
         }else{
             res.status(400).json({
@@ -85,7 +86,8 @@ export const createTimeClockCheckOut = async (req: Request, res: Response) => {
 
          if(timeClock){
              res.status(201).json({
-                 message: timeClock
+                 data : timeClock,
+                 message: "operation of checkin was done successfully"
               })
          }else{
              res.status(400).json({
